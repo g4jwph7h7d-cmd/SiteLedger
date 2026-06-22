@@ -20,6 +20,7 @@ def init_db(app):
     db_path = app.config.get('DATABASE')
     if not db_path:
         raise RuntimeError('DATABASE path not set in app.config')
+    # Ensure directory exists
     dirname = os.path.dirname(db_path)
     if dirname and not os.path.exists(dirname):
         os.makedirs(dirname, exist_ok=True)
@@ -78,17 +79,6 @@ def init_db(app):
         quantity_used REAL,
         balance REAL,
         FOREIGN KEY(site_id) REFERENCES sites(id)
-    )
-    """)
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS labour_payment (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        date TEXT NOT NULL,
-        worker_id INTEGER NOT NULL,
-        amount_paid REAL NOT NULL,
-        advance_deduction REAL DEFAULT 0,
-        remarks TEXT,
-        FOREIGN KEY(worker_id) REFERENCES workers(id)
     )
     """)
     conn.commit()
