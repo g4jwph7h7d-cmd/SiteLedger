@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template_string, request, redirect, url_for
-from .db import get_db
+from db import get_db
 
 bp = Blueprint('attendance', __name__)
 
